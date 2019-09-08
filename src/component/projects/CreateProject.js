@@ -1,53 +1,55 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { createProject } from "../../store/actions/projectActions";
 import { Redirect } from "react-router-dom";
 
-class CreateProject extends Component {
-  state = {
-    title: "",
-    content: ""
+function CreateProject(props) {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const { auth } = props;
+
+  const handleChangeTitle = e => {
+    setTitle(e.target.value);
+  };
+  const handleChangeContent = e => {
+    setContent(e.target.value);
   };
 
-  handleChange = e => {
-    this.setState({
-      // Id of the input
-      [e.target.id]: e.target.value
-    });
-  };
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.createProject(this.state);
-    this.props.history.push("/");
+    props.createProject({
+      title,
+      content
+    });
+    props.history.push("/");
   };
-  render() {
-    const { auth } = this.props;
-    if (!auth.uid) return <Redirect to="/signin" />;
-    return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit} className="white">
-          <h5 className="grey-text text-darken-3">Sign In</h5>
-          <div className="input-field">
-            <label htmlFor="title">Title</label>
-            <input type="text" id="title" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <label htmlFor="password">Content</label>
-            <textarea
-              className="materialize-textarea"
-              id="content"
-              nChange={this.handleChange}
-            />
-          </div>
-          <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">
-              Create Project
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  }
+
+  if (!auth.uid) return <Redirect to="/signin" />;
+
+  return (
+    <div className="container">
+      <form onSubmit={handleSubmit} className="white">
+        <h5 className="grey-text text-darken-3">Sign In</h5>
+        <div className="input-field">
+          <label htmlFor="title">Title</label>
+          <input type="text" id="title" onChange={handleChangeTitle} />
+        </div>
+        <div className="input-field">
+          <label htmlFor="password">Content</label>
+          <textarea
+            className="materialize-textarea"
+            id="content"
+            onChange={handleChangeContent}
+          />
+        </div>
+        <div className="input-field">
+          <button className="btn pink lighten-1 z-depth-0">
+            Create Project
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
