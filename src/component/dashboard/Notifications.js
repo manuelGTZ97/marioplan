@@ -16,6 +16,7 @@ function Notifications(props) {
                     <span className="pink-text">{item.user} </span>
                     <span>{item.content}</span>
                     <div className="grey-text note-date">
+                      {/* Format the date with moment */}
                       {moment(item.time.toDate()).fromNow()}
                     </div>
                   </li>

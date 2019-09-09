@@ -31,9 +31,13 @@ function ProjectDetail(props) {
   );
 }
 
+// Ownprops specified the props provided by the parent
 const mapStateToProps = (state, ownProps) => {
+  // Get the router id
   const id = ownProps.match.params.id;
+  // Get the firebaseConnect data.
   const projects = state.firestore.data.projects;
+  //If project is true, get the project with the correctly id, if not, set to null.
   const project = projects ? projects[id] : null;
   return {
     project: project,

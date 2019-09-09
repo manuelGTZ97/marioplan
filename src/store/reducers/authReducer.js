@@ -4,6 +4,7 @@ const initState = {
 const authReducer = (state = initState, action) => {
   switch (action.type) {
     case "LOGIN_ERROR":
+      // Here is using the initial state and concat with the new state, is updating the redux state and the components is using it. For example SignIn.js
       return {
         ...state,
         authError: "Login Failed"

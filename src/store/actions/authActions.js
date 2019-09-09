@@ -1,3 +1,4 @@
+// The actions provide a function that works as an action and dispatch a type, also you can add more properties to the dispatch object.
 export const signIn = credentials => {
   return (dispatch, getstate, { getFirebase }) => {
     const firebase = getFirebase();

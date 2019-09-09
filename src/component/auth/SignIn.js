@@ -4,15 +4,18 @@ import { signIn } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
 function SignIn(props) {
+  // Create the state hooks.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { authError, auth } = props;
 
+  // Function that is listening for changes in the input fields.
   const handleChangeEmail = e => {
     // set the state
     setEmail(e.target.value);
   };
 
+  // Function that is listening for changes in the input fields.
   const handleChangePassword = e => {
     setPassword(e.target.value);
   };
@@ -26,6 +29,7 @@ function SignIn(props) {
     });
   };
 
+  // If the uid is true, redirect to home
   if (auth.uid) return <Redirect to="/" />;
 
   return (
@@ -55,6 +59,7 @@ function SignIn(props) {
   );
 }
 
+// Map the redux state to props.
 const mapStateToProps = state => {
   return {
     authError: state.auth.authError,
@@ -62,12 +67,16 @@ const mapStateToProps = state => {
   };
 };
 
+// Get the dispatch function to props.
 const mapDispatchToProps = dispath => {
   return {
     signIn: cred => dispath(signIn(cred))
   };
 };
 
+// High order component by redux.
+// Connect it provides the component with the redux store, by default, mapStateToProps goes first, and then mapDispathToProps.
+// If just want to pass the second function, pass null as the first.
 export default connect(
   mapStateToProps,
   mapDispatchToProps

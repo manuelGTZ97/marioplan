@@ -6,8 +6,9 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 
-function Dashboard() {
-  const { projects, auth, notifications } = this.props;
+function Dashboard(props) {
+  // Get the redux state as props.
+  const { projects, auth, notifications } = props;
   if (!auth.uid) return <Redirect to="/signin" />;
 
   return (
@@ -26,6 +27,7 @@ function Dashboard() {
 
 const mapStateToProps = state => {
   return {
+    // Get the state by the firebaseConnect function
     projects: state.firestore.ordered.projects,
     auth: state.firebase.auth,
     notifications: state.firestore.ordered.notifications
@@ -34,6 +36,8 @@ const mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps),
+  // Listen to provided firebase paths using react hooks. Connect the database with a collection. This works with the reducers provided in the rootReducer.
+  // You specific the query for the datatbase
   firestoreConnect([
     { collection: "projects", orderBy: ["createdAt", "desc"] },
     { collection: "notifications", limit: 3, orderBy: ["time", "desc"] }

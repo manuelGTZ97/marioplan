@@ -4,6 +4,7 @@ export const createProject = project => {
     const firestore = getFirestore();
     const profile = getState().firebase.profile;
     const authorId = getState().firebase.auth.uid;
+    // Save the data to the database
     firestore
       .collection("projects")
       .add({
@@ -13,6 +14,7 @@ export const createProject = project => {
         authorId,
         createdAt: new Date()
       })
+      // Dispatch a type and the project object to the reducers.
       .then(() => {
         dispatch({ type: "CREATE_PROJECT", project });
       })

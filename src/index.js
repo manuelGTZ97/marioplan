@@ -1,3 +1,4 @@
+// Import all the dependencies
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -11,6 +12,13 @@ import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
 
+// Create the redux store.
+// This is the information that redux will manage in all the application.
+// 1.- load the root reduces.
+// 2.- Pass the compose function. Inside load a thunk middleware that works async with the store and add extra arguments to the actions.
+// 3.- ReduxFireStore load the firebase configuration.
+// 4.- reactReduxFirebase load the firebase configuration and auth configuration.
+// http://docs.react-redux-firebase.com/history/v2.0.0/docs/recipes/auth.html
 const store = createStore(
   rootReducer,
   compose(
@@ -18,12 +26,13 @@ const store = createStore(
     reduxFirestore(fbConfig),
     reactReduxFirebase(fbConfig, {
       useFirestoreForProfile: true,
-      userProfile: "users",
-      attachAuthIsReady: true
+      userProfile: "users", // firebase root where user profiles are stored
+      attachAuthIsReady: true // attaches auth is ready promise to store
     })
   )
 );
 
+// Wait for the auth.
 store.firebaseAuthIsReady.then(() => {
   ReactDOM.render(
     <Provider store={store}>

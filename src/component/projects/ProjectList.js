@@ -8,6 +8,7 @@ function ProjectList({ projects }) {
       {projects &&
         projects.map(project => {
           return (
+            // Concat the link with the project id
             <Link to={"/project/" + project.id} key={project.id}>
               <ProjectSummary project={project} />
             </Link>

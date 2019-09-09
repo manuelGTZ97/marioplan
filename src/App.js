@@ -9,6 +9,7 @@ import CreateProject from "./component/projects/CreateProject";
 
 function App() {
   return (
+    // Routes by react router, just for navigation.
     <BrowserRouter>
       <div className="App">
         <Navbar />
