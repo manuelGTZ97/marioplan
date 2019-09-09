@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const Notifications = props => {
+function Notifications(props) {
   const { notifications } = props;
   return (
     <div className="section">
@@ -26,6 +26,6 @@ const Notifications = props => {
       </div>
     </div>
   );
-};
+}
 
 export default Notifications;
