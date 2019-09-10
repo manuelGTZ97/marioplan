@@ -9,6 +9,21 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
   response.send("Hello from Firebase!");
 });
 
+// This works as an endpoint, you can add an express app or just works as a microservices.
+exports.test = functions.https.onRequest((request, response) => {
+  if (request.method === "POST") {
+    console.log("POST");
+    if (request.body) {
+      const text = request.body.text;
+      response.status(200).send("The message that you sent is " + text);
+    } else {
+      response.status(400).send("Body empty");
+    }
+  } else {
+    response.status(400).send("You need to send it with a post method");
+  }
+});
+
 const createNotification = notification => {
   return admin
     .firestore()
